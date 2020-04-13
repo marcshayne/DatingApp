@@ -45,6 +45,9 @@
             <tab heading="Photos">
               <p> !!! Having issues with ngx-gallery !!!</p>
               <!-- <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery> -->
+              <p *ngFor=" let photo of photos">
+                <img src="{{photo.url}}">
+              </p>           
             </tab>
             <tab heading="Messages">
               <p>Messages will go here</p>

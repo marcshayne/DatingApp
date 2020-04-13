@@ -3,6 +3,7 @@ import { User } from 'src/app/_models/user';
 import { UserService } from 'src/app/_services/user.service';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { ActivatedRoute } from '@angular/router';
+import { Photo } from 'src/app/_models/photo';
 // import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
 
 @Component({
@@ -12,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class MemberDetailComponent implements OnInit {
   user: User;
+  photos: Photo[];
   // galleryOptions: NgxGalleryOptions[];
   // galleryImages: NgxGalleryImage[];
 
@@ -22,9 +24,12 @@ export class MemberDetailComponent implements OnInit {
   ngOnInit() {
     // this.loadUser();
     // use resolver instead of loaduser()
+ 
 
     this.route.data.subscribe(data => {
       this.user = data['user'];  // data['user'] is the same "user" defined in teh resolve of routes.ts 
+      this.photos = this.user.photos;
+      console.log(this.user.photos);
     });
 
     // this.galleryOptions = [
