@@ -29,7 +29,7 @@ export class MemberDetailComponent implements OnInit {
     this.route.data.subscribe(data => {
       this.user = data['user'];  // data['user'] is the same "user" defined in teh resolve of routes.ts 
       this.photos = this.user.photos;
-      console.log(this.user.photos);
+     // console.log(this.user.photos);
     });
 
     // this.galleryOptions = [
