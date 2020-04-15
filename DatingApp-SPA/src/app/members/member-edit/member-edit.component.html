@@ -11,7 +11,8 @@
     <div class="col-sm-4">
       
       <div class="card">
-        <img class ="card-img-top img-thumbnail" src="{{user.photoUrl}}" alt="{{user.knownAs}}">
+        <!-- <img class ="card-img-top img-thumbnail" src="{{user.photoUrl}}" alt="{{user.knownAs}}"> -->
+        <img class ="card-img-top img-thumbnail" src="{{photoUrl}}" alt="{{user.knownAs}}"> <!--L.119--> 
         <div class="card-body">
           <div>
             <strong>location:</strong>
@@ -59,7 +60,7 @@
               </form>
             </tab>
             <tab heading="Edit Photos">
-              <p>photos will go here</p>
+              <app-photo-editor [photos]="user.photos" (getMemberPhotoChange)="updateMainPhoto($event)"></app-photo-editor>
             </tab>
         </tabset>
       </div>

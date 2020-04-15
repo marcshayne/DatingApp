@@ -15,3 +15,10 @@
     background-color: #fff;
     border-top: none;
 }
+
+.img-thumbnail2{
+    margin: 25px;
+    padding: 2px;
+    width: 150px;
+    height: 150px;
+}
