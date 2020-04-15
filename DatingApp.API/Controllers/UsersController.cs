@@ -31,7 +31,7 @@ namespace DatingApp.API.Controllers
             return Ok(usersToReturn);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name ="GetUser")]  // L.131 added name to be used in CreatedAtRoute in Regiter method
         public async Task<IActionResult> GetUser(int id)
         {
             var user = await _repo.GetUser(id);

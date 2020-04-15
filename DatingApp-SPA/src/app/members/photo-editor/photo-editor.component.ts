@@ -55,11 +55,18 @@ export class PhotoEditorComponent implements OnInit {
           isMain: res.isMain
         };
         this.photos.push(photo);
+
+        // L.133 to update the photo for newly rgistered users
+        if (photo.isMain) {
+          this.authService.changeMemberPhoto(photo.url);
+          this.authService.currentUser.photoUrl = photo.url;
+          localStorage.setItem('user', JSON.stringify(this.authService.currentUser));
+        }
       }
     };
   }
 
-  setMainPhoto(photo: Photo){
+  setMainPhoto(photo: Photo) {
     this.userService.setMainPhoto(this.authService.decodedToken.nameid, photo.id)
       .subscribe(() => {
         // console.log('Successfully set to main');
@@ -67,7 +74,7 @@ export class PhotoEditorComponent implements OnInit {
         this.currentMain.isMain = false;
         photo.isMain = true;
         // this.getMemberPhotoChange.emit(photo.url); // works with the @Output property
-        this.authService.changeMemberPhoto(photo.url); // L.119 instead of emiting photoUrl
+        this.authService.changeMemberPhoto(photo.url); // L.119 instead of emiting photoUrl. to update the photo in card and navbar
         this.authService.currentUser.photoUrl = photo.url; // L.119 to add chanegd photo to localstorage
         localStorage.setItem('user', JSON.stringify(this.authService.currentUser));  // L.119 to add chanegd photo to localstorage
       }, error => {

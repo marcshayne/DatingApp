@@ -41,15 +41,17 @@ export class AuthService {
         )
       );
   }
-
-  register(model: any) {
-    return this.http.post(this.baseUrl + 'register', model);
+  // ** modify teh Register() to use User
+  // register(model: any) {
+  //   return this.http.post(this.baseUrl + 'register', model);
+  // }
+  register(user: User) { // L.132
+    return this.http.post(this.baseUrl + 'register', user);
   }
 
   loggedIn() {
     const token = localStorage.getItem('token');
     return !this.jwtHelper.isTokenExpired(token);
   }
-
 
 }
