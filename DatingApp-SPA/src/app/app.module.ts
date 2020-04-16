@@ -10,7 +10,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { RouterModule } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
 import { FileUploadModule } from 'ng2-file-upload';
-
+// import {TimeAgoPipe} from 'time-ago-pipe';
 
 import { ErrorInterceptorProvider } from './_services/error.interceptor';
 import { appRoutes } from './routes';
@@ -41,6 +41,7 @@ export function tokenGetter() {
 
 @NgModule({
    declarations: [
+      // TimeAgoPipe,
       AppComponent,
       NavComponent,
       HomeComponent,
