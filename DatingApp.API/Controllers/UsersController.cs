@@ -24,11 +24,32 @@ namespace DatingApp.API.Controllers
             _repo = repo;
         }
 
+       
+        // public async Task<IActionResult> GetUsers()   //*** modified to use paging
+        // {
+        //     var users = await _repo.GetUsers();
+        //     var usersToReturn = _mapper.Map<IEnumerable<UserForListDto>>(users);
+        //     return Ok(usersToReturn);
+        // }
         [HttpGet]
-        public async Task<IActionResult> GetUsers()
+        public async Task<IActionResult> GetUsers([FromQuery]UserParams userParams) // userParams will be coming from a query string
         {
-            var users = await _repo.GetUsers();
+           // for filtering
+            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var userFromRepo = await _repo.GetUser(currentUserId);
+            userParams.UserId = currentUserId;
+            if (string.IsNullOrEmpty(userParams.Gender)) // if gender not specified
+            {
+                userParams.Gender = userFromRepo.Gender == "male" ? "female" : "male";
+            }
+           
+            var users = await _repo.GetUsers(userParams);
             var usersToReturn = _mapper.Map<IEnumerable<UserForListDto>>(users);
+
+            // we have access to the reponse header because we are inside the controller
+            // users is a PagedList of users that contains the headers
+            // we pass the page headers to teh client
+            Response.AddPagination(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
 
             return Ok(usersToReturn);
         }
@@ -36,6 +57,7 @@ namespace DatingApp.API.Controllers
         [HttpGet("{id}", Name ="GetUser")]  // L.131 added name to be used in CreatedAtRoute in Regiter method
         public async Task<IActionResult> GetUser(int id)
         {
+                      
             var user = await _repo.GetUser(id);
 
             var userToReturn = _mapper.Map<UserForDetailedDto>(user);
